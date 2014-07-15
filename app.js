@@ -29,11 +29,12 @@ var removeItems = function(thisButton, input) {
 };
 
 
-// populate the todo list with items from todoItems
-for (var i = 0; i < todoItems.length; i++) {
-	var newButton = addItems(todoItems[i]);	
-	newButton.addEventListener('click', removeItems, true, todoItems[i]);
-}
+// populate the todo list with items from todoItems/localStorage
+	todoItems.forEach(function(text) {
+		var newButton = addItems(text);	
+		newButton.addEventListener('click', removeItems, true, text);
+	});
+
 
 // add and remove from form
 addForm.onsubmit = function(e) {
@@ -41,7 +42,7 @@ addForm.onsubmit = function(e) {
 	
 	var newButton = addItems(this.add_todo.value)
 	todoItems.push(this.add_todo.value);
-	localStorage.setItem('items', this.add_todo.value);
+	localStorage.setItem('items', todoItems);
 	newButton.addEventListener('click', removeItems, true, this.add_todo.value);
 
 	this.add_todo.value = '';
